@@ -1,0 +1,18 @@
+N = 100; PulseWidth = 10;
+t = [0:1:(N-1)];
+u = @(t) 1.0 .* (t>= 0);
+x = u(t) - u(t-10);
+sinusoid = cos((pi/3)*t);
+w_c = x.* sinusoid;% Our modulated signal in time domain
+W_C_F = fft(w_c); % our modulated signal in freq. domain
+
+f = [-(N/2):1:(N/2)-1]*(1/N);
+w=2*pi*f; %Our omega variable (radian freq.)
+
+subplot(211); plot(w,fftshift( abs(W_C_F))); grid on;title('Abs(Wc (w)) with pulse width = 10');
+xlabel('w'); 
+ylabel('Abs(Wc (w))') 
+subplot(212); plot(w,fftshift(angle(W_C_F))); grid on;title('phase of Wc (w) with pulse width = 10');
+xlabel('w'); 
+ylabel('phase in radian')
+clear all;
